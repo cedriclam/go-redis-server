@@ -16,12 +16,13 @@ func parseRequest(conn io.ReadCloser) (*Request, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	// note that this line also protects us from negative integers
 	var argsCount int
 
 	// Multiline request:
 	if line[0] == '*' {
-		if _, err := fmt.Sscanf(line, "*%d\r", &argsCount); err != nil {
+		if _, err := fmt.Sscanf(line, "*%d\n", &argsCount); err != nil {
 			return nil, malformed("*<numberOfArguments>", line)
 		}
 		// All next lines are pairs of:
@@ -71,7 +72,7 @@ func readArgument(r *bufio.Reader) ([]byte, error) {
 		return nil, malformed("$<argumentLength>", line)
 	}
 	var argSize int
-	if _, err := fmt.Sscanf(line, "$%d\r", &argSize); err != nil {
+	if _, err := fmt.Sscanf(line, "$%d\n", &argSize); err != nil {
 		return nil, malformed("$<argumentSize>", line)
 	}
 

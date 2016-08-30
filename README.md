@@ -17,7 +17,7 @@ Sample code
 package main
 
 import (
-	redis "github.com/dotcloud/go-redis-server"
+	redis "github.com/cedriclam/go-redis-server"
 )
 
 type MyHandler struct {

@@ -1,11 +1,12 @@
 package main
 
 import (
-	redis "github.com/dotcloud/go-redis-server"
+	redis "github.com/cedriclam/go-redis-server"
 )
 
 func main() {
-	server, err := redis.NewServer(redis.DefaultConfig())
+
+	server, err := redis.NewServer(redis.DefaultConfig().Host("0.0.0.0"))
 	if err != nil {
 		panic(err)
 	}

@@ -20,6 +20,15 @@ type Server struct {
 }
 
 func (srv *Server) ListenAndServe() error {
+	l, e := srv.Listen()
+	if e != nil {
+		return e
+	}
+	return srv.Serve(l)
+}
+
+// Listen creatre the net.Listener with the current configuration
+func (srv *Server) Listen() (net.Listener, error) {
 	addr := srv.Addr
 	if srv.Proto == "" {
 		srv.Proto = "tcp"
@@ -29,11 +38,7 @@ func (srv *Server) ListenAndServe() error {
 	} else if addr == "" {
 		addr = ":6389"
 	}
-	l, e := net.Listen(srv.Proto, addr)
-	if e != nil {
-		return e
-	}
-	return srv.Serve(l)
+	return net.Listen(srv.Proto, addr)
 }
 
 // Serve accepts incoming connections on the Listener l, creating a

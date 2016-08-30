@@ -14,6 +14,12 @@ type StatusReply struct {
 	code string
 }
 
+func NewStatusReply(code string) *StatusReply {
+	return &StatusReply{
+		code: code,
+	}
+}
+
 func (r *StatusReply) WriteTo(w io.Writer) (int64, error) {
 	n, err := w.Write([]byte("+" + r.code + "\r\n"))
 	return int64(n), err
